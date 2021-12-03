@@ -30,11 +30,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  image_picker: ^0.8.4+4
-  supabase: ^0.2.10
   flutter_native_image: ^0.0.6+1
+  image_picker: ^0.8.4+4
   intl: ^0.17.0
-  
+  supabase: ^0.2.10
+
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:

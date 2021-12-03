@@ -34,22 +34,13 @@ class _InicioState extends State<Inicio> {
   Future<XFile?> getImage() async {
     final ImagePicker _picker = ImagePicker();
 //    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-//    XFile? image = await _picker.pickImage(source: ImageSource.camera);
-
-//    final _picker = ImagePicker();
-
-    final image = await _picker.pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1500,
-      maxHeight: 960,
-    );
-
+    XFile? image = await _picker.pickImage(source: ImageSource.camera);
     return image;
   }
 
   testa(String myPath) async {
     File compressedFile = await FlutterNativeImage.compressImage(myPath,
-        quality: 80, targetWidth: 220, targetHeight: 355);
+        quality: 80, targetWidth: 250, targetHeight: 160);
     thumbs = compressedFile;
   }
 

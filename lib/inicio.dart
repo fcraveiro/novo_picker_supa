@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase/supabase.dart';
 import 'dart:io';
 
@@ -15,6 +17,7 @@ String supabaseKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzODA3NTI4MywiZXhwIjoxOTUzNjUxMjgzfQ.gsz31qxeQ_h6R_93rthZwynvz1i8jNrXLz30JaFprqA';
 
 var confuso2 = '';
+//String nomeDaFoto = 'nova1';
 
 class _InicioState extends State<Inicio> {
   SupabaseClient cliente = SupabaseClient(supabaseUrl, supabaseKey);
@@ -28,15 +31,37 @@ class _InicioState extends State<Inicio> {
     return image;
   }
 
+  testa(String myPath) async {
+//    ImageProperties properties =
+//        await FlutterNativeImage.getImageProperties(myPath);
+    File compressedFile = await FlutterNativeImage.compressImage(myPath,
+        quality: 80, targetWidth: 250, targetHeight: 160);
+    // ignore: avoid_print
+//    print('FILE COMPRIMIDO = ${compressedFile.path}');
+  }
+
   pickAndUploadImage() async {
+    var dnow = DateTime.now();
+    var formatter = DateFormat('yyyy.MM.dd.hh.mm.ss');
+    String nomeDaFoto = 'id1' + formatter.format(dnow);
+
     XFile? file = await getImage();
     if (file != null) {
       File storedImage = File(file.path);
-      await cliente.storage.from('pronto').upload(file.name, storedImage).then(
+      await cliente.storage.from('pronto').upload(nomeDaFoto, storedImage).then(
         (value) {
           var confuso = cliente.storage.from('pronto').getPublicUrl(file.name);
-          confuso2 = confuso.data.toString();
 
+          // ignore: avoid_print
+//          print('FILE ORIGINAL = ${confuso.data.toString()}');
+
+          // ignore: avoid_print
+          print('PATH = ${file.path}');
+          // ignore: avoid_print
+          print('NAME = ${file.name}');
+
+          testa(file.path.toString());
+          confuso2 = confuso.data.toString();
           setState(() {
             confuso2 = confuso.data.toString();
           });
@@ -139,6 +164,20 @@ class _InicioState extends State<Inicio> {
 
 
 
+    // ignore: avoid_print
+    print('.');
+    // ignore: avoid_print
+    print('Atual Height : ${properties.height}');
+    // ignore: avoid_print
+    print('Atual Width : ${properties.width}');
+    // ignore: avoid_print
+    print('Atual Height : ${properties2.height}');
+    // ignore: avoid_print
+    print('Atual Width : ${properties2.width}');
+    // ignore: avoid_print
+    print('Atual Width : ${compressedFile.path}');
+    // ignore: avoid_print
+    print('.');
 
 
 */

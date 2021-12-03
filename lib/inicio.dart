@@ -14,44 +14,34 @@ String supabaseUrl = 'https://xrhyhsbetlnzksauwrvi.supabase.co';
 String supabaseKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzODA3NTI4MywiZXhwIjoxOTUzNjUxMjgzfQ.gsz31qxeQ_h6R_93rthZwynvz1i8jNrXLz30JaFprqA';
 
+var confuso2 = '';
+
 class _InicioState extends State<Inicio> {
   SupabaseClient cliente = SupabaseClient(supabaseUrl, supabaseKey);
 
-  List<String> arquivos = [];
   bool loading = true;
-  bool uploading = false;
-  double total = 0;
-  var meupath = 'bucket/';
 
   Future<XFile?> getImage() async {
     final ImagePicker _picker = ImagePicker();
-    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+//    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    XFile? image = await _picker.pickImage(source: ImageSource.camera);
     return image;
   }
 
   pickAndUploadImage() async {
     XFile? file = await getImage();
-
     if (file != null) {
       File storedImage = File(file.path);
-      meupath = '(bucket_id)';
+      await cliente.storage.from('pronto').upload(file.name, storedImage).then(
+        (value) {
+          var confuso = cliente.storage.from('pronto').getPublicUrl(file.name);
+          confuso2 = confuso.data.toString();
 
-      await cliente.storage
-          .from('prontoodonto')
-          .upload(file.name, storedImage)
-          .then((value) {
-        // ignore: avoid_print
-        print('VOLTA DO BUCKET = $value');
-      });
-
-      // ignore: avoid_print
-      print('STORED = $storedImage');
-      // ignore: avoid_print
-      print('PATH = ${file.path}');
-      // ignore: avoid_print
-      print('NAME = ${file.name}');
-      // ignore: avoid_print
-      print('File = $file');
+          setState(() {
+            confuso2 = confuso.data.toString();
+          });
+        },
+      );
     }
   }
 
@@ -67,10 +57,15 @@ class _InicioState extends State<Inicio> {
           )
         ],
       ),
-      body: Container(
-        width: 100,
-        height: 100,
-        color: Colors.red,
+      body: Text(confuso2),
+    );
+  }
+
+  texto(teste) {
+    Text(
+      teste,
+      style: const TextStyle(
+        color: Colors.black,
       ),
     );
   }
@@ -113,3 +108,37 @@ class _InicioState extends State<Inicio> {
   //}
 
  
+ /*
+       // ignore: avoid_print
+      print('STORED = $storedImage');
+      // ignore: avoid_print
+      print('PATH = ${file.path}');
+      // ignore: avoid_print
+      print('NAME = ${file.name}');
+      // ignore: avoid_print
+      print('File = $file');
+
+        // ignore: avoid_print
+        print('VOLTA DO BUCKET TESTE = ${teste.data}');
+
+        // ignore: avoid_print
+        print('VOLTA DO BUCKET 1 = $value');
+        // ignore: avoid_print
+        print('VOLTA DO BUCKET 2 = ${value.data.toString()}');
+        // ignore: avoid_print
+        print('VOLTA DO BUCKET 2 = ${value.data.toString()}');
+        // ignore: avoid_print
+        print('STORED = $storedImage');
+        // ignore: avoid_print
+        print('PATH = ${file.path}');
+        // ignore: avoid_print
+        print('NAME = ${file.name}');
+        // ignore: avoid_print
+        print('File = $file');
+
+
+
+
+
+
+*/

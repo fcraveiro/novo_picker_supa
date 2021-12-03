@@ -43,17 +43,17 @@ class _InicioState extends State<Inicio> {
   pickAndUploadImage() async {
     var dnow = DateTime.now();
     var formatter = DateFormat('yyyy.MM.dd.hh.mm.ss');
-    String nomeDaFoto = 'id1' + formatter.format(dnow);
+    String nomeDaFoto = 'id1' + formatter.format(dnow) + '.jpg';
 
     XFile? file = await getImage();
     if (file != null) {
       File storedImage = File(file.path);
       await cliente.storage.from('pronto').upload(nomeDaFoto, storedImage).then(
         (value) {
-          var confuso = cliente.storage.from('pronto').getPublicUrl(file.name);
+          var confuso = cliente.storage.from('pronto').getPublicUrl(nomeDaFoto);
 
           // ignore: avoid_print
-//          print('FILE ORIGINAL = ${confuso.data.toString()}');
+          print('FILE ORIGINAL = ${confuso.data.toString()}');
 
           // ignore: avoid_print
           print('PATH = ${file.path}');

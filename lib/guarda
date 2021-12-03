@@ -16,14 +16,7 @@ String supabaseUrl = 'https://xrhyhsbetlnzksauwrvi.supabase.co';
 String supabaseKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzODA3NTI4MywiZXhwIjoxOTUzNjUxMjgzfQ.gsz31qxeQ_h6R_93rthZwynvz1i8jNrXLz30JaFprqA';
 
-var dnow = DateTime.now();
-var formatter = DateFormat('yyyy.MM.dd.hh.mm.ss');
-var nomeFoto = 'id1' + formatter.format(dnow) + '.jpg';
-var pathFoto = '';
-var pathServidor = '';
-var pathThumb = '';
-File thumbs = '' as File;
-
+var confuso2 = '';
 //String nomeDaFoto = 'nova1';
 
 class _InicioState extends State<Inicio> {
@@ -39,39 +32,41 @@ class _InicioState extends State<Inicio> {
   }
 
   testa(String myPath) async {
+//    ImageProperties properties =
+//        await FlutterNativeImage.getImageProperties(myPath);
     File compressedFile = await FlutterNativeImage.compressImage(myPath,
         quality: 80, targetWidth: 250, targetHeight: 160);
-    thumbs = compressedFile;
-  }
-
-  gravaFoto(nomeDaFoto, storedImage) async {
-    await cliente.storage.from('pronto').upload(nomeDaFoto, storedImage).then(
-      (value) {
-        var response = cliente.storage.from('pronto').getPublicUrl(nomeDaFoto);
-        pathFoto = response.data.toString();
-      },
-    );
+    // ignore: avoid_print
+//    print('FILE COMPRIMIDO = ${compressedFile.path}');
   }
 
   pickAndUploadImage() async {
     var dnow = DateTime.now();
     var formatter = DateFormat('yyyy.MM.dd.hh.mm.ss');
-    var nomeFoto = 'id1' + formatter.format(dnow) + '.jpg';
+    String nomeDaFoto = 'id1' + formatter.format(dnow) + '.jpg';
+
     XFile? file = await getImage();
     if (file != null) {
-      var nomeDaFoto = nomeFoto;
       File storedImage = File(file.path);
-      await gravaFoto(nomeDaFoto, storedImage);
-      pathServidor = pathFoto;
-      await testa(file.path.toString());
+      await cliente.storage.from('pronto').upload(nomeDaFoto, storedImage).then(
+        (value) {
+          var confuso = cliente.storage.from('pronto').getPublicUrl(nomeDaFoto);
 
-      // ignore: avoid_print
-      print('Path do Servidor : $pathServidor');
-      nomeDaFoto = 'thumb-' + nomeDaFoto;
-      await gravaFoto(nomeDaFoto, thumbs);
-      pathThumb = pathFoto;
-      // ignore: avoid_print
-      print('Path da Thumb : $pathThumb');
+          // ignore: avoid_print
+          print('FILE ORIGINAL = ${confuso.data.toString()}');
+
+          // ignore: avoid_print
+          print('PATH = ${file.path}');
+          // ignore: avoid_print
+          print('NAME = ${file.name}');
+
+          testa(file.path.toString());
+          confuso2 = confuso.data.toString();
+          setState(() {
+            confuso2 = confuso.data.toString();
+          });
+        },
+      );
     }
   }
 
@@ -87,7 +82,7 @@ class _InicioState extends State<Inicio> {
           )
         ],
       ),
-      body: Text(pathServidor),
+      body: Text(confuso2),
     );
   }
 

@@ -256,6 +256,7 @@ class _InicioState extends State<Inicio> {
     idThumb = dataHoje + '-thumb' + tipoArquivo;
     await gravaFoto(2, idThumb, pathThumbs);
     animaQuadro();
+    await gravaPaciente(pathServerThumb);
     foiSalva = true;
   }
 
@@ -286,4 +287,23 @@ class _InicioState extends State<Inicio> {
     // ignore: avoid_print
     print('Escolha $animacao');
   }
+
+  Future gravaPaciente(String pathThumbs) async {
+    await cliente.from('historico').insert({
+      'hisIdPaciente': 1,
+      'hisPathThumb': pathThumbs,
+      'hisPathServer': pathServerNormal,
+      'hisFoto': true
+    }).execute();
+  }
 }
+
+/*class Conecta {
+  final client = SupabaseClient(supabaseUrl, supabaseKey);
+
+  Future gravaPaciente(File pathThumbs) async {
+    await client.from('pacientes').insert(
+        {'hisIdPaciente': 1, 'hisPath': pathThumbs, 'hisFoto': true}).execute();
+  }
+}
+*/

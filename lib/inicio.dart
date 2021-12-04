@@ -38,12 +38,6 @@ class _InicioState extends State<Inicio> {
       appBar: AppBar(
         title: const Text('Histórico'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.upload),
-            onPressed: () {},
-          )
-        ],
       ),
       body: Center(
         child: SizedBox(
@@ -54,13 +48,34 @@ class _InicioState extends State<Inicio> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 230,
-                height: 390,
+                width: 280,
+                height: 365,
                 padding: const EdgeInsets.all(0),
                 margin: const EdgeInsets.only(top: 45),
-                child: Center(
-                  child: Column(),
-                ),
+//                color: Colors.purple,
+                child: temFoto
+                    ? Image.file(File(pathFoto.path))
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Aguardando',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue.shade700,
+                            ),
+                          ),
+                          Text(
+                            'Foto',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
               ),
               const SizedBox(
                 height: 40,
@@ -78,6 +93,8 @@ class _InicioState extends State<Inicio> {
                               setState(() {
                                 temFoto = false;
                               });
+
+                              _showToast(context);
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 7,
@@ -227,5 +244,22 @@ class _InicioState extends State<Inicio> {
     await gravaFoto(2, idThumb, pathThumbs);
 
     foiSalva = true;
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      const SnackBar(
+        elevation: 10,
+        backgroundColor: Color(0xFF0D47A1),
+        duration: Duration(seconds: 2),
+        content: Text(
+          'Salvo com Sucesso !!',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
   }
 }

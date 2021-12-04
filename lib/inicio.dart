@@ -3,6 +3,8 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase/supabase.dart';
+import 'package:lottie/lottie.dart';
+import 'dart:math';
 import 'dart:io';
 
 class Inicio extends StatefulWidget {
@@ -25,6 +27,8 @@ bool foiSalva = false;
 var tipoArquivo = '.jpg';
 var idFoto = '';
 var idThumb = '';
+var animacao = '';
+int escolha = 0;
 
 var pathServerNormal = '';
 var pathServerThumb = '';
@@ -33,11 +37,18 @@ class _InicioState extends State<Inicio> {
   SupabaseClient cliente = SupabaseClient(supabaseUrl, supabaseKey);
 
   @override
+  void initState() {
+    super.initState();
+    animaQuadro();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Histórico'),
         centerTitle: true,
+        backgroundColor: const Color(0xFF0D47A1),
       ),
       body: Center(
         child: SizedBox(
@@ -58,22 +69,7 @@ class _InicioState extends State<Inicio> {
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Aguardando',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue.shade700,
-                            ),
-                          ),
-                          Text(
-                            'Foto',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue.shade700,
-                            ),
-                          ),
+                          LottieBuilder.asset('assets/imagens/$animacao'),
                         ],
                       ),
               ),
@@ -93,7 +89,6 @@ class _InicioState extends State<Inicio> {
                               setState(() {
                                 temFoto = false;
                               });
-
                               _showToast(context);
                             },
                             style: ElevatedButton.styleFrom(
@@ -112,7 +107,27 @@ class _InicioState extends State<Inicio> {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 20,
+              ),
+              temFoto
+                  ? Text(
+                      ' ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue.shade700,
+                      ),
+                    )
+                  : Text(
+                      'Aguardando sua Opção',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue.shade700,
+                      ),
+                    ),
+              const SizedBox(
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +138,6 @@ class _InicioState extends State<Inicio> {
                     child: ElevatedButton(
                       onPressed: () {
                         foiSalva = false;
-
                         pickCamera();
                       },
                       style: ElevatedButton.styleFrom(
@@ -143,7 +157,6 @@ class _InicioState extends State<Inicio> {
                     child: ElevatedButton(
                       onPressed: () {
                         foiSalva = false;
-
                         pickgaleria();
                       },
                       style: ElevatedButton.styleFrom(
@@ -242,7 +255,7 @@ class _InicioState extends State<Inicio> {
     await geraThumb(1, pathFoto);
     idThumb = dataHoje + '-thumb' + tipoArquivo;
     await gravaFoto(2, idThumb, pathThumbs);
-
+    animaQuadro();
     foiSalva = true;
   }
 
@@ -261,5 +274,15 @@ class _InicioState extends State<Inicio> {
         ),
       ),
     );
+  }
+
+  animaQuadro() {
+    int max = 17;
+    int escolha = Random().nextInt(max) + 1;
+    animacao = '$escolha.json';
+    // ignore: avoid_print
+    print('Escolha $escolha');
+    // ignore: avoid_print
+    print('Escolha $animacao');
   }
 }

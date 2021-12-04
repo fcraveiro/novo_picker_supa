@@ -23,6 +23,7 @@ var pathFoto = '';
 var pathServidor = '';
 var pathThumb = '';
 File thumbs = '' as File;
+bool mudou = false;
 
 //String nomeDaFoto = 'nova1';
 
@@ -81,30 +82,129 @@ class _InicioState extends State<Inicio> {
       pathThumb = pathFoto;
       // ignore: avoid_print
       print('Path da Thumb : $pathThumb');
+      setState(() {
+        mudou = true;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('aa'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.upload),
-            onPressed: pickAndUploadImage,
-          )
-        ],
-      ),
-      body: Text(pathServidor),
-    );
+        appBar: AppBar(
+          title: const Text('Histórico'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.upload),
+              onPressed: pickAndUploadImage,
+            )
+          ],
+        ),
+        body: Center(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width - 10,
+            height: MediaQuery.of(context).size.height - 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 230,
+                  height: 294,
+                  color: Colors.grey.shade600,
+                  padding: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.only(top: 70),
+                  child: Center(
+                      child: mudou
+                          ? Image.network(
+                              pathThumb,
+                              width: 220,
+                              height: 280,
+                              fit: BoxFit.cover,
+                            )
+                          : const Text(
+                              'Aguardando !!',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            )),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 130,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 7,
+                          primary: Colors.red.shade700, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        child: texto('SalvarI'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 130,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          pickAndUploadImage();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 7,
+                          primary: Colors.green.shade700, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        child: texto('Câmera'),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    SizedBox(
+                      width: 130,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          pickAndUploadImage();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 7,
+                          primary: Colors.green.shade700, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        child: texto('Galeria'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
-  texto(teste) {
-    Text(
-      teste,
-      style: const TextStyle(
-        color: Colors.black,
+  texto(String texto) {
+    return SizedBox(
+      width: 160,
+      child: Text(
+        texto,
+        textAlign: TextAlign.center,
       ),
     );
   }

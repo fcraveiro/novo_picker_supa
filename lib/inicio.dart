@@ -271,6 +271,7 @@ class _InicioState extends State<Inicio> {
           style: TextStyle(
             fontSize: 16,
           ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

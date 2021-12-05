@@ -79,14 +79,16 @@ class Historico {
   int hisid;
   DateTime createdAt;
   int hisIdPaciente;
-  String hispath;
+  String hisPathThumb;
+  String hisPathServer;
   bool hisfoto;
 
   Historico({
     required this.hisid,
     required this.createdAt,
     required this.hisIdPaciente,
-    required this.hispath,
+    required this.hisPathThumb,
+    required this.hisPathServer,
     required this.hisfoto,
   });
 
@@ -95,7 +97,8 @@ class Historico {
       hisid: map['his_id'],
       createdAt: map['his_createdAt'.toString()],
       hisIdPaciente: map['his_idPaciente'.toString()],
-      hispath: map['his_idPaciente'.toString()],
+      hisPathThumb: map['his_idPathThumb'.toString()],
+      hisPathServer: map['his_idPathServer'.toString()],
       hisfoto: map['his_foto'.toString()],
     );
   }

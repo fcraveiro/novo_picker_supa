@@ -28,13 +28,15 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  flex_color_scheme: ^4.1.1
   flutter:
     sdk: flutter
   flutter_native_image: ^0.0.6+1
   image_picker: ^0.8.4+4
   intl: ^0.17.0
-  supabase: ^0.2.10
   lottie: ^1.2.1
+  provider: ^6.0.1
+  supabase: ^0.2.10
 
 dev_dependencies:
   flutter_lints: ^1.0.0

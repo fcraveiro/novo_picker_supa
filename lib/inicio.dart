@@ -48,7 +48,8 @@ class _InicioState extends State<Inicio> {
       appBar: AppBar(
         title: const Text('Histórico'),
         centerTitle: true,
-        backgroundColor: const Color(0xFF0D47A1),
+        elevation: 6,
+//        backgroundColor: const Color(0xFF0D47A1),
       ),
       body: Center(
         child: SizedBox(
@@ -89,20 +90,21 @@ class _InicioState extends State<Inicio> {
                               setState(() {
                                 temFoto = false;
                               });
+
                               _showToast(context);
                             },
-                            style: ElevatedButton.styleFrom(
-                              elevation: 7,
-                              primary: Colors.red.shade700, // background
-                              onPrimary: Colors.white, // foreground
-                            ),
+//                      style: ElevatedButton.styleFrom(
+//                        elevation: 7,
+//                        primary: Colors.green.shade700, // background
+//                        onPrimary: Colors.white, // foreground
+//                      ),
                             child: texto('SalvarI'),
                           ),
                         )
-                      : Container(
+                      : const SizedBox(
                           width: 130,
                           height: 40,
-                          color: Colors.white,
+//                          color: Colors.white,
                         ),
                 ],
               ),
@@ -110,20 +112,21 @@ class _InicioState extends State<Inicio> {
                 height: 20,
               ),
               temFoto
-                  ? Text(
+                  ? const Text(
                       ' ',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: Colors.blue.shade700,
+//                        color: Colors.blue.shade700,
                       ),
                     )
-                  : Text(
+                  : const Text(
                       'Aguardando sua Opção',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: Colors.blue.shade700,
+
+//                        color: Colors.blue.shade700,
                       ),
                     ),
               const SizedBox(
@@ -140,11 +143,11 @@ class _InicioState extends State<Inicio> {
                         foiSalva = false;
                         pickCamera();
                       },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 7,
-                        primary: Colors.green.shade700, // background
-                        onPrimary: Colors.white, // foreground
-                      ),
+//                      style: ElevatedButton.styleFrom(
+//                        elevation: 7,
+//                        primary: Colors.green.shade700, // background
+//                        onPrimary: Colors.white, // foreground
+//                      ),
                       child: texto('Câmera'),
                     ),
                   ),
@@ -159,11 +162,11 @@ class _InicioState extends State<Inicio> {
                         foiSalva = false;
                         pickgaleria();
                       },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 7,
-                        primary: Colors.green.shade700, // background
-                        onPrimary: Colors.white, // foreground
-                      ),
+//                      style: ElevatedButton.styleFrom(
+//                        elevation: 7,
+//                        primary: Colors.green.shade700, // background
+//                        onPrimary: Colors.white, // foreground
+//                      ),
                       child: texto('Galeria'),
                     ),
                   ),
@@ -257,6 +260,10 @@ class _InicioState extends State<Inicio> {
     await gravaFoto(2, idThumb, pathThumbs);
     animaQuadro();
     await gravaPaciente(pathServerThumb);
+    // ignore: avoid_print
+    print(pathServerNormal);
+    // ignore: avoid_print
+    print(pathServerNormal);
     foiSalva = true;
   }
 
@@ -265,12 +272,12 @@ class _InicioState extends State<Inicio> {
     scaffold.showSnackBar(
       const SnackBar(
         elevation: 10,
-        backgroundColor: Color(0xFF0D47A1),
+//        backgroundColor: Color(0xFF0D47A1),
         duration: Duration(seconds: 2),
         content: Text(
           'Salvo com Sucesso !!',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 20,
           ),
           textAlign: TextAlign.center,
         ),
@@ -289,21 +296,37 @@ class _InicioState extends State<Inicio> {
   }
 
   Future gravaPaciente(String pathThumbs) async {
-    await cliente.from('historico').insert({
-      'hisIdPaciente': 1,
-      'hisPathThumb': pathThumbs,
-      'hisPathServer': pathServerNormal,
-      'hisFoto': true
-    }).execute();
+    await cliente.from('historico').insert(
+      {
+        'hisIdPaciente': 1,
+        'hisPathThumb': pathThumbs,
+        'hisPathServer': pathServerNormal,
+        'hisFoto': true
+      },
+    ).execute();
   }
 }
 
-/*class Conecta {
-  final client = SupabaseClient(supabaseUrl, supabaseKey);
 
-  Future gravaPaciente(File pathThumbs) async {
-    await client.from('pacientes').insert(
-        {'hisIdPaciente': 1, 'hisPath': pathThumbs, 'hisFoto': true}).execute();
-  }
-}
+
+                          /*                        
+                           ElevatedButton(
+                            onPressed: () {
+                              gravacao();
+                              setState(() {
+                                temFoto = false;
+                              }
+                              
+                              );
+                              _showToast(context);
+                            },
+//                            style: ElevatedButton.styleFrom(
+//                              elevation: 7,
+//                              primary: Colors.red.shade700, // background
+//                             onPrimary: Colors.white, // foreground
+//                            ),
+                            child: texto('SalvarI'),
+                          ),
+
 */
+

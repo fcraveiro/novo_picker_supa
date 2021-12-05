@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:novo_picker_supa/inicio.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:novo_picker_supa/teste.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,15 +10,32 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      themeMode: ThemeMode.light,
+      theme: AppColor.tipo3,
+      darkTheme: FlexColorScheme.dark(scheme: FlexScheme.aquaBlue).toTheme,
       home: const Inicio(),
     );
   }
+
+/*
+
+
+ ChangeNotifierProvider(
+        child: const Inicio(),
+        create: (_) => TemasController(),
+      ),
+
+
+      scheme = FlexScheme.hippieBlue,
+      scheme = FlexScheme.mallardGreen,
+      scheme = FlexScheme.outerSpace,
+      scheme = FlexScheme.custom,
+*/
+
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:novo_picker_supa/inicio.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:novo_picker_supa/teste.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
